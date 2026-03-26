@@ -177,9 +177,16 @@ ALWAYS:
 
 - Ask user for their plan tier (Pro or Demo) and API key before writing code
 - Hard-code the correct base URL and auth header for the user's plan — no branching logic
-- Use ISO date strings (`YYYY-MM-DD`) for date parameters
+- Check each endpoint's date/time format — it varies:
+
+| Context                                              | Format                   |
+| ---------------------------------------------------- | ------------------------ |
+| Coin/Contract/Supply `from`/`to`                     | ISO `YYYY-MM-DD`         |
+| `GET /exchanges/{id}/volume_chart/range` `from`/`to` | UNIX timestamp (seconds) |
+| `GET /coins/{id}/history` `date`                     | `DD-MM-YYYY`             |
+| GeckoTerminal `before_timestamp`                     | UNIX timestamp (seconds) |
+
 - Use `GET /search` to resolve coin IDs by name/symbol before calling other endpoints
-- Prefer CoinGecko endpoints when both CoinGecko and GeckoTerminal could answer the question
 - Fall back to GeckoTerminal for pool data, DEX-native tokens, or tokens not listed on CoinGecko
 
 NEVER:
@@ -196,7 +203,7 @@ NEVER:
 2. Is the correct auth header name used (`x-cg-pro-api-key` vs `x-cg-demo-api-key`)?
 3. Are coin IDs resolved (not guessed) via `GET /search` or `GET /coins/list`?
 4. Is CoinGecko preferred over GeckoTerminal for aggregated data?
-5. Are date params in ISO format, not UNIX timestamps?
+5. Are date/time params using the correct format per endpoint?
 
 If any fails, revise.
 
