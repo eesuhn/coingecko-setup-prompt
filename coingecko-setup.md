@@ -186,6 +186,7 @@ ALWAYS:
 | `GET /coins/{id}/history` `date`                     | `DD-MM-YYYY`             |
 | GeckoTerminal `before_timestamp`                     | UNIX timestamp (seconds) |
 
+- When the user refers to "now", "today", "this week", etc., always use the actual current date from the system — never infer dates from training data
 - Use `GET /search` to resolve coin IDs by name/symbol before calling other endpoints
 - Fall back to GeckoTerminal for pool data, DEX-native tokens, or tokens not listed on CoinGecko
 
