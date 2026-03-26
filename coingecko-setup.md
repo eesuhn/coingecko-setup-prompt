@@ -18,25 +18,10 @@ Or visit https://github.com/coingecko/skills
 |---|---|---|---|
 | **Paid (Pro)** | 250+ calls/min | `https://pro-api.coingecko.com/api/v3` | `x-cg-pro-api-key: KEY` |
 | **Demo** | 30 calls/min | `https://api.coingecko.com/api/v3` | `x-cg-demo-api-key: KEY` |
-| **Keyless** | ~10 calls/min | `https://api.coingecko.com/api/v3` | *(none)* |
 
 Both key types start with `CG-`. Use header **or** query param — not both. GeckoTerminal endpoints append `/onchain` to the base URL.
 
-## Keyless Mode
-
-No signup required. Omit all auth headers/params to use keyless access. Capped at ~10 calls/min with shared IP pool — unreliable for production. Good enough for quick prototyping. Get a free Demo key at https://www.coingecko.com/en/api/pricing for anything beyond a few test calls.
-
 ## Quick Start — Fetch Bitcoin Price (Node.js)
-
-```typescript
-const BASE_URL = "https://api.coingecko.com/api/v3";
-
-// Keyless — no API key needed for quick tests
-const res = await fetch(`${BASE_URL}/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true`);
-const data = await res.json();
-console.log(data);
-// { bitcoin: { usd: 67187.33, usd_24h_change: 3.637 } }
-```
 
 ### With a Demo API Key
 
@@ -180,7 +165,7 @@ GET /onchain/networks/eth/tokens/0x.../top_holders
 
 | Code | Meaning | Action |
 |---|---|---|
-| `401` | No API key | Provide API key or use keyless |
+| `401` | No API key | Provide API key |
 | `429` | Rate limit exceeded | Reduce call frequency or upgrade plan |
 | `10005` | Endpoint requires higher plan | Upgrade at https://www.coingecko.com/en/api/pricing |
 | `10010` | Pro key on Demo URL | Switch base URL to `pro-api.coingecko.com` |
@@ -201,7 +186,7 @@ NEVER:
 
 - Guess the user's plan type — both key types start with `CG-`, so it's ambiguous
 - Use both auth header and query param at the same time
-- Skip asking for credentials — only fall back to keyless after explicit user confirmation
+- Skip asking for credentials
 - Mix up base URLs (Pro key → `pro-api.coingecko.com`, Demo key → `api.coingecko.com`)
 - Assume GeckoTerminal data is as reliable as CoinGecko aggregated data for well-known coins
 
